@@ -2,7 +2,8 @@
 
 
 def bubble_sort(input_list):
-    """Implementation of bubble sort. Sorts an 
+    """Implementation of bubble sort. Bubble sort is 
+    a stable sorting algorithm that sorts an 
     unsorted list of elements in-place."""
     for i in range(len(input_list) - 1):
         swapped = False
