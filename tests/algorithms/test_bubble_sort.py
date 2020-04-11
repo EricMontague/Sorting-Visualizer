@@ -5,10 +5,11 @@ from algorithms.bubble_sort import bubble_sort
 
 
 def test_sort_empty_list(empty_list):
-        """Test that when bubble sort is passed an empty list,
-        that nothing happens."""
-        bubble_sort(empty_list)
-        assert empty_list == []
+    """Test that when bubble sort is passed an empty list,
+    that nothing happens.
+    """
+    bubble_sort(empty_list)
+    assert empty_list == []
 
 
 def test_sort_unsorted_list_of_integers(unsorted_list_of_integers):
