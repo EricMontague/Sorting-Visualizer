@@ -28,7 +28,7 @@ def test_sort_sorted_list_of_integers(sorted_list_of_integers):
     assert [0, 1, 2, 3, 4, 5] == sorted_list_of_integers
 
 
-def test_sort_is_stable(list_of_objects):
+def test_bubble_sort_is_stable(list_of_objects):
     """Test that if two elements in a list have the same key,
     that their relative ordering is still preserved after the
     list is sorted. This is achieved by using a list of objects,
