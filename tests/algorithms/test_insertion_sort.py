@@ -1,7 +1,7 @@
 """This module contains tests for my insertion sort implementation."""
 
 
-from algorithms.insertion_sort import insertion_sort
+from algorithms import insertion_sort
 
 
 def test_sort_empty_list(empty_list):

@@ -1,7 +1,7 @@
 """This module contains tests for my implementation of selection sort."""
 
 
-from algorithms.selection_sort import selection_sort
+from algorithms import selection_sort
 
 
 def test_sort_empty_list(empty_list):

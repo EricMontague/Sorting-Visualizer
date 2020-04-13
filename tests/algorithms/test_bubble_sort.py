@@ -1,7 +1,7 @@
 """This module contains tests for my bubble sort implementation."""
 
 
-from algorithms.bubble_sort import bubble_sort
+from algorithms import bubble_sort
 
 
 def test_sort_empty_list(empty_list):
