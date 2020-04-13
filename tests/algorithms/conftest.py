@@ -15,6 +15,9 @@ class TestProduct:
     def __lt__(self, other):
         return self.quantity < other.quantity
 
+    def __le__(self, other):
+        return self.quantity <= other.quantity
+
 
 @pytest.fixture
 def empty_list():
