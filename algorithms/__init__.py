@@ -1,4 +1,6 @@
-"""This package contains various sorting alorithms."""
+"""This package contains various sorting alorithms to be used in the
+visualizer GUI.
+"""
 
 
 from algorithms.bubble_sort import bubble_sort
