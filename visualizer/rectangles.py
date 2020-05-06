@@ -1,7 +1,4 @@
-"""This module contains the class responsible for defining rectangles."""
-
-
-import pygame
+"""This module contains a class to represent a rectangle."""
 
 
 class Rectangle:
@@ -33,3 +30,9 @@ class Rectangle:
         """Return a copy of the current rectangle."""
         pass
 
+    def _get_surface(self):
+        """Return the rectangular area of the navbar's area as
+        a pygame Surface object."""
+        return pygame.Surface(self.width, self.height)
+
+    
