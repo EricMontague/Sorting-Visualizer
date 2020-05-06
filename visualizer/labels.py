@@ -9,9 +9,9 @@ class Label:
         self.center = center
         self.text = self.font.render(text, antialias, color, background=background)
         
-    def draw(self, surface):
+    def draw(self, surface, center=None):
         """Draw the label on the given surface."""
-        text_surface = self._get_surface(self.center)
+        text_surface = self._get_surface(center or self.center)
         surface.blit(self.text, text_surface)
 
     def undraw(self):
