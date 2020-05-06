@@ -8,7 +8,7 @@ class SortManager:
     requested by the user.
     """
 
-    def __init__(self, algorithm):
+    def __init__(self):
         # algorithm is a function that implements a sorting algorithm
         self.algorithm = algorithm
 
@@ -17,4 +17,8 @@ class SortManager:
         defined in the algorithm attribute. Return the sorted list.
         """
         return self.algorithm(unsorted_list)
-        
+    
+    def swap(self, bar_one, bar_two):
+        """Swap two bars on the screen."""
+        pass
+
