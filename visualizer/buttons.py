@@ -1,9 +1,11 @@
 """This module contains the class responsible for defining buttons."""
 
+# Buttons: 
+# "Reset"
+# "Sort!"
 
-from visualizer.rectangles import Rectangle
-from visualizer.labels import Label
-
+# "Speed": button with a triangle in the middle and a number on the side
+# "Array Size": button with a triangle in the middle
 
 class Button:
     """Class to represent a button."""
@@ -40,6 +42,11 @@ class Button:
     def get_label(self):
         """Return the text label for the button."""
         pass
+
+    def _get_surface(self):
+        """Return the rectangular area of the navbar's area as
+        a pygame Surface object."""
+        return pygame.Surface(self.rectangle.width, self.rectangle.height)
 
     
     
