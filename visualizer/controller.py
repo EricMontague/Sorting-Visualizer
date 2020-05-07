@@ -8,34 +8,32 @@ import pygame
 class SortingVisualizerController:
     """Class to represent the controller for the visualizer."""
 
-    def __init__(self, interface, algorithms, sorting_manager, sorting_speed=5):
+    def __init__(self, interface, algorithms, sorting_speed=5):
         self.interface = interface
         self.algorithms = algorithms
         self.sorting_speed = sorting_speed
-        self.sorting_manager = sorting_manager
         self.selected_algorithm = None
 
     def run(self):
         """Start the visualizer."""
         while not self.interface.quit():
-            element = self.interface.get_clicked_element()
+            element, mouse_position = self.interface.get_clicked_element()
             if element.name in self.algorithms:
-                element.select()
                 self.update_selected_algorithm(element.name)
-                self.interface.update(element)
+                self.interface.navbar.choose_algorithm(element.name)
+                self.interface.render(self.interface.navbar)
             elif element.name == "speed_adjuster":
                 self.update_sorting_speed(element.value)
-                self.interface.update(element)
+                element.update(mouse_position)
+                self.interface.navbar.render(element)
             elif element.name == "array_size_adjuster":
-                new_array = self.generate_new_array(element.value)
-                self.interface.update(new_array)
+                element.update(mouse_position)
+                new_array = SortingVisualizerController.generate_new_array(element.value)
+                self.interface.render(new_array, element)
             elif element.name == "sort_button":
                 if self.is_algorithm_selected():
-                    self.sorting_manager.sort(
-                        self.sorting_speed, 
-                        self.selected_algorithm,
-                        self.interface.bars
-                    )
+                    sort = self.algorithms[self.selected_algorithm]
+                    sort(self.interface, self.sorting_speed)
                 else:
                     message = "Please choose an algorithm."
                     self.interface.display_message(
@@ -56,9 +54,10 @@ class SortingVisualizerController:
     def update_sorting_speed(self, speed):
         """Update the registered sorting speed."""
         pass
-
-    def generate_new_array(self, size):
-        """Return a new list of bars of the given size to replace
+    
+    @staticmethod
+    def generate_new_array(size):
+        """Return a new list of bars of the given size and to replace
         the bars currently on the screen.
         """
         pass
