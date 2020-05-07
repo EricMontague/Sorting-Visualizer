@@ -34,15 +34,7 @@ class NavBar:
         """Alter the state of the element in the navbar that
         was clicked.
         """
-        for element in self.elements:
-            if element.type == "LABEL":
-                if element.clicked(position):
-                    element.change_color("ENTER COLOR HERE")
-            elif element.type == "BUTTON":
-                if element.clicked_increase(position):
-                    element.increment()
-                else:
-                    element.decrement()
+        pass
 
     def _get_surface(self):
         """Return the rectangular area of the navbar's area as
