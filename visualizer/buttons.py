@@ -10,14 +10,11 @@
 class Button:
     """Class to represent a button."""
 
-    def __init__(self, surface, label, rectangle):
+    def __init__(self, label, rectangle):
         self.rectangle = rectangle
-        self.rectangle.draw(surface)
         self.label = label
-        self.label.draw(surface)
-        self.deactivate() # buttons will be deactivated by default
 
-    def draw(self):
+    def draw(self, surface):
         """Draw the button."""
         pass
 
@@ -43,10 +40,33 @@ class Button:
         """Return the text label for the button."""
         pass
 
+    @property
+    def name(self):
+        """Return the button label's text."""
+        return self.label.name
+
     def _get_surface(self):
         """Return the rectangular area of the navbar's area as
         a pygame Surface object."""
         return pygame.Surface(self.rectangle.width, self.rectangle.height)
 
     
+
+# https://www.nngroup.com/articles/input-steppers/
+class InputStepperButton:
+    """Class to represent either a minus or plus button for
+    an input stepper widget.
+    """
+
+    def __init__(self, circle, label):
+        self.circle = circle
+        self.label = label
+
+    def draw(self, surface):
+        """Draw the button."""
+        pass
+
+    def undraw(self):
+        """Undraw the button."""
+        pass
     
