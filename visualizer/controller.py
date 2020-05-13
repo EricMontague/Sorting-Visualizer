@@ -3,6 +3,8 @@
 
 import sys
 import pygame
+import random
+from visualizer.bars import NumberBarFactory
 
 
 class SortingVisualizerController:
@@ -60,7 +62,9 @@ class SortingVisualizerController:
         """Return a new list of bars of the given size and to replace
         the bars currently on the screen.
         """
-        pass
+        values = [random.randrange(1, 100) for num in range(size)]
+        number_bars = NumberBarFactory.create_bars(values)
+        return number_bars
 
     def is_algorithm_selected(self):
         """Return True if the user has selected an algorithm."""
