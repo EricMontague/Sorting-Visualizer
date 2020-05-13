@@ -17,6 +17,11 @@ class Label:
     def undraw(self):
         """Undraw the label."""
         pass
+
+    @property
+    def name(self):
+        """Return the label's text."""
+        pass
     
     def _get_surface(self, center):
         """Return the rectangular area of the label's surface as a pygame Surface object."""
