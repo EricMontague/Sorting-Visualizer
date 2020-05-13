@@ -2,7 +2,7 @@
 
 
 import pygame
-
+from visualizer.labels import Label
 
 # Right most side of navbar:
 # "Selection Sort"
@@ -16,16 +16,14 @@ import pygame
 #To get a surface from a rectangle, you can create a new Surface
 #object using the rectangle's dimensions
 # e.g. surf = pygame.Surface((a.w, a.h))
-class NavBar:
+class NavigationBar:
     """Class to represent a navigation bar for the GUI."""
 
-    def __init__(self, surface, rectangle, elements):
+    def __init__(self, rectangle, elements):
         self.rectangle = rectangle
-        self.rectangle.draw(surface)
         self.elements = elements
-        self.draw()
 
-    def draw(self):
+    def draw(self, surface):
         """Draw the navigation bar onto the screen."""
         for element in self.elements:
             element.draw(self._get_surface())
@@ -42,18 +40,16 @@ class NavBar:
         return pygame.Surface(self.rectangle.width, self.rectangle.height)
         
 
-class Bar:
+class NumberBar:
     """Class to represent a bar in the GUI. The bar in turns
     represents a number in a list.
     """
 
-    def __init__(self, surface, label, rectangle):
+    def __init__(self, label, rectangle):
         self.rectangle = rectangle
-        self.rectangle.draw(surface)
         self.label = label
-        self.label.draw(surface)
 
-    def draw(self):
+    def draw(self, surface):
         """Draw the bar on the screen."""
         pass
 
@@ -73,3 +69,14 @@ class Bar:
         return pygame.Surface(self.rectangle.width, self.rectangle.height)
 
 
+
+class NumberBarFactory:
+    """Factory class to generate NumberBar instances."""
+
+    @staticmethod
+    def create_bars(values):
+        """Return NumberBar instances, each with one
+        of the given values.
+        """
+        pass
+    
