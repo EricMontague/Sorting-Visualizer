@@ -1,5 +1,7 @@
 """This module contains the class responsible for defining buttons."""
 
+# https://inventwithpython.com/blog/2012/10/30/designing-a-button-ui-module-for-pygame/
+import pygame
 # Buttons: 
 # "Reset"
 # "Sort!"
@@ -10,13 +12,17 @@
 class Button:
     """Class to represent a button."""
 
-    def __init__(self, label, rectangle):
-        self.rectangle = rectangle
+    def __init__(self, label, dimensions, color):
+        self.rectangle = pygame.Rect(dimensions)
         self.label = label
+        self.color = color
 
     def draw(self, surface):
         """Draw the button."""
-        pass
+        button_surface = self._get_surface()
+        surface.blit(self.rectangle, button_surface)
+        label_center = (self.rectangle.top // 2, self.rectangle.left // 2)
+        self.label.draw(button_surface, label_center)
 
     def undraw(self):
         """Undraw the button."""
@@ -58,15 +64,17 @@ class InputStepperButton:
     an input stepper widget.
     """
 
-    def __init__(self, circle, label):
-        self.circle = circle
+    def __init__(self, center, label):
+        self.circle = pygame.Circle(center)
         self.label = label
 
     def draw(self, surface):
         """Draw the button."""
+        circle_surface = self._get_surface()
+        surface.blit(self.circle, circle_surface)
+        self.label.draw(surface, self.circle.center)
+    
+    def _get_surface():
         pass
 
-    def undraw(self):
-        """Undraw the button."""
-        pass
     

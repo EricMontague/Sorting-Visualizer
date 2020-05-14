@@ -11,7 +11,9 @@ class Label:
         
     def draw(self, surface, center=None):
         """Draw the label on the given surface."""
-        text_surface = self._get_surface(center or self.center)
+        if center is not None:
+            self.center = center
+        text_surface = self._get_surface(self.center)
         surface.blit(self.text, text_surface)
 
     def undraw(self):

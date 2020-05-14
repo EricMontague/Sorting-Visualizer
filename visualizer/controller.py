@@ -58,12 +58,12 @@ class SortingVisualizerController:
         pass
     
     @staticmethod
-    def generate_new_array(size):
+    def generate_new_array(surface, size):
         """Return a new list of bars of the given size and to replace
         the bars currently on the screen.
         """
         values = [random.randrange(1, 100) for num in range(size)]
-        number_bars = NumberBarFactory.create_bars(values)
+        number_bars = NumberBarFactory.create_bars(surface, values)
         return number_bars
 
     def is_algorithm_selected(self):

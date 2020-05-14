@@ -19,14 +19,15 @@ from visualizer.labels import Label
 class NavigationBar:
     """Class to represent a navigation bar for the GUI."""
 
-    def __init__(self, rectangle, elements):
-        self.rectangle = rectangle
+    def __init__(self, dimensions, elements):
+        self.rectangle = pygame.Rect(dimensions)
         self.elements = elements
 
     def draw(self, surface):
         """Draw the navigation bar onto the screen."""
+        navbar_surface = self._get_surface()
         for element in self.elements:
-            element.draw(self._get_surface())
+            element.draw(navbar_surface)
 
     def click(self, position):
         """Alter the state of the element in the navbar that
@@ -45,13 +46,16 @@ class NumberBar:
     represents a number in a list.
     """
 
-    def __init__(self, label, rectangle):
-        self.rectangle = rectangle
+    def __init__(self, label, dimensions):
+        self.rectangle = pygame.Rect(dimensions)
         self.label = label
 
     def draw(self, surface):
         """Draw the bar on the screen."""
-        pass
+        bar_surface = self._get_surface()
+        surface.blit(self.rectangle, bar_surface)
+        label_center = ()
+        self.label.draw(surface, label_center)
 
     def flash(self, color):
         """Change the bar's color to the provided color and then back
@@ -74,7 +78,7 @@ class NumberBarFactory:
     """Factory class to generate NumberBar instances."""
 
     @staticmethod
-    def create_bars(values):
+    def create_bars(surface, values):
         """Return NumberBar instances, each with one
         of the given values.
         """
