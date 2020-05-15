@@ -18,24 +18,23 @@ def create_controller(interface):
     return visualizer
 
 
-def create_number_bars(window, num_bars=5):
+def create_number_bars(screen, num_bars=5):
     """Create the bars that are going to represent numbers in an
     unsorted array.
     """
-    number_bars = SortingVisualizerController.generate_new_array(window, num_bars)
+    number_bars = SortingVisualizerController.generate_new_array(screen, num_bars)
     return number_bars
 
 
-def create_input_stepper(name, navbar):
+def create_input_stepper(name, navbar_dimensions, button_color=(255, 255, 255)):
     """Create and return an input stepper widget."""
-    
-    minus_button_center = ()
-    plus_button_center = ()
-    input_label = Label()
-    minus_label = Label()
-    plus_label = Label()
-    increment_button = InputStepperButton(plus_button_center, plus_label)
-    decrement_button = InputStepperButton(minus_button_center, minus_label)
+    #defaultbutton color is white
+    font = pygame.font.SysFont(name="Arial", size=24)
+    input_label = Label(font, "5", button_color)
+    triangle_up = ()
+    triangle_down = ()
+    increment_button = InputStepperButton(triangle_up, button_color)
+    decrement_button = InputStepperButton(triangle_down, button_color)
     input_stepper = InputStepper(
         input_label,
         increment_button,
@@ -45,30 +44,46 @@ def create_input_stepper(name, navbar):
     return input_stepper
 
 
-def create_navigation_bar(window):
+def create_navigation_bar(screen):
     """Create the navigation bar."""
-    navbar_color = "blue"
-    dimensions = (1,2,3,4)
-    navbar = pygame.draw.rect(window, navbar_color, dimensions)
-    sorting_speed_widget = create_input_stepper("sorting_spped_adjuster", navbar)
-    array_size_widget = create_input_stepper("array_size_adjuster", navbar)
-    navbar_elements = [Label() for algorithm in ALGORITHMS]
+    font = pygame.font.SysFont(name="Arial", size=24)
+    font_color = (255, 255, 255) # white
+    navbar_color = (51, 153, 255) # blue
+    navbar_dimensions = (0, 0, screen.get_width(), screen.get_height() // 8)
+
+    sorting_speed_widget = create_input_stepper("sorting_spped_adjuster", navbar_dimensions)
+    array_size_widget = create_input_stepper("array_size_adjuster", navbar_dimensions)
+
+    navbar_elements = [Label(font, algorithm, font_color) for algorithm in ALGORITHMS]
     navbar_elements.append(sorting_speed_widget)
     navbar_elements.append(array_size_widget)
-    navigation_bar = NavigationBar(navbar, navbar_elements)
+    navbar_elements.append(Label(font, "Array Size", font_color))
+    navbar_elements.append(Label(font, "Sorting Speed", font_color))
+
+    navigation_bar = NavigationBar(navbar_dimensions, navbar_elements, navbar_color)
     return navigation_bar
 
     
-def create_interface(window):
+def create_interface(screen):
     """Create all of the necessary shapes and objects
     to build the visualizer interface. Returns a
     SortingVisualizerGUI instance.
     """
-    navigation_bar = create_navigation_bar(window)
-    reset_button = Button()
-    sort_button = Button()
-    number_bars = create_number_bars(window)
+    font = pygame.font.SysFont(name="Arial", size=24)
+    font_color = (0, 0, 0) # black
+    button_color = () # gray
+    reset_buttons_dimensions = ()
+    sort_button_dimensions = ()
+    navigation_bar = create_navigation_bar(screen)
+    sort_label = Label(font, "Sort", font_color)
+    reset_label = Label(font, "Reset", font_color)
+
+    reset_button = Button(reset_label, reset_button_dimensions, button_color)
+    sort_button = Button(sort_label, sort_button_dimensions, button_color)
+
+    number_bars = create_number_bars(screen)
     interface = SortingVisualizerGUI(
+        screen,
         navigation_bar,
         [reset_button, sort_button],
         number_bars
@@ -82,9 +97,10 @@ def main():
     width = 1080
     height = 600
     background_color = (255, 255, 255) # white
-    window = pygame.display.set_mode(size=(width, height))
-    window.fill(background_color)
-    interface = create_interface(window)
+    screen = pygame.display.set_mode(size=(width, height))
+    screen.fill(background_color)
+
+    interface = create_interface(screen)
     visualizer = create_controller(interface)
     visualizer.run()
 
