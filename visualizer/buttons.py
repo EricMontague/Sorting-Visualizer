@@ -12,17 +12,16 @@ import pygame
 class Button:
     """Class to represent a button."""
 
-    def __init__(self, label, dimensions, color):
+    def __init__(self, label, dimensions, background_color):
         self.rectangle = pygame.Rect(dimensions)
         self.label = label
-        self.color = color
+        self.background_color = background_color
 
     def draw(self, surface):
         """Draw the button."""
         button_surface = self._get_surface()
         surface.blit(self.rectangle, button_surface)
-        label_center = (self.rectangle.top // 2, self.rectangle.left // 2)
-        self.label.draw(button_surface, label_center)
+        self.label.draw(button_surface, self.rectangle.center)
 
     def undraw(self):
         """Undraw the button."""
@@ -64,17 +63,21 @@ class InputStepperButton:
     an input stepper widget.
     """
 
-    def __init__(self, center, label):
-        self.circle = pygame.Circle(center)
-        self.label = label
-
+    def __init__(self, points, background_color, line_width=0):
+        self.points = points
+        self.background_color = background_color
+        self.line_width = line_width
+        
     def draw(self, surface):
-        """Draw the button."""
-        circle_surface = self._get_surface()
-        surface.blit(self.circle, circle_surface)
-        self.label.draw(surface, self.circle.center)
+        """Draw the button onto the given surface."""
+        self.triangle = pygame.draw.polygon(
+            surface, 
+            self.background_color, 
+            self.points, 
+            self.line_width
+        )
+        
     
-    def _get_surface():
-        pass
+
 
     
