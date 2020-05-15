@@ -4,15 +4,14 @@
 class Label:
     """Class to represent a label."""
 
-    def __init__(self, font, text, color, center, antialias=True, background=None):
+    def __init__(self, font, text, font_color, antialias=True, background=None):
         self.font = font
-        self.center = center
-        self.text = self.font.render(text, antialias, color, background=background)
+        self.font_color = font_color
+        self.text = self.font.render(text, antialias, font_color, background=background)
         
-    def draw(self, surface, center=None):
+    def draw(self, surface, center):
         """Draw the label on the given surface."""
-        if center is not None:
-            self.center = center
+        self.center = center
         text_surface = self._get_surface(self.center)
         surface.blit(self.text, text_surface)
 
