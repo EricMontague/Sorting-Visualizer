@@ -15,7 +15,9 @@ class InputStepper:
 
     def draw(self, surface):
         """Draw the widget on the screen."""
-        self.label.draw(surface)
+        x = self.increment_button.centerx - 30
+        y = (self.increment_button.centery + self.decrement_button.centery) // 2
+        self.label.draw(surface, (x, y))
         self.increment_button.draw(surface)
         self.decrement_button.draw(surface)
 
