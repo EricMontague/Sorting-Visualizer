@@ -3,6 +3,7 @@
 
 import pygame
 from visualizer.labels import Label
+from visualizer.widget_types import WidgetType
 
 # Right most side of navbar:
 # "Selection Sort"
@@ -13,8 +14,8 @@ from visualizer.labels import Label
 # "Quicksort"
 
 
-#To get a surface from a rectangle, you can create a new Surface
-#object using the rectangle's dimensions
+# To get a surface from a rectangle, you can create a new Surface
+# object using the rectangle's dimensions
 # e.g. surf = pygame.Surface((a.w, a.h))
 class NavigationBar:
     """Class to represent a navigation bar for the GUI."""
@@ -23,12 +24,19 @@ class NavigationBar:
         self.rectangle = pygame.Rect(dimensions)
         self.elements = elements
         self.color = color
+        self.type = WidgetType.BAR
 
     def draw(self, surface):
         """Draw the navigation bar onto the screen."""
-        navbar_surface = self._get_surface()
+        label_x = 115
+        label_y = 38
+        pygame.draw.rect(surface, self.color, self.rectangle)
         for element in self.elements:
-            element.draw(navbar_surface)
+            if element.type == WidgetType.LABEL:
+                element.draw(surface, (label_x, label_y))
+                label_x += element.text.get_rect().right + 75
+            else:
+                element.draw(surface)
 
     def click(self, position):
         """Alter the state of the element in the navbar that
@@ -39,8 +47,8 @@ class NavigationBar:
     def _get_surface(self):
         """Return the rectangular area of the navbar's area as
         a pygame Surface object."""
-        return pygame.Surface(self.rectangle.width, self.rectangle.height)
-        
+        return pygame.Surface(size=(self.rectangle.width, self.rectangle.height))
+
 
 class NumberBar:
     """Class to represent a bar in the GUI. The bar in turns
@@ -51,13 +59,13 @@ class NumberBar:
         self.rectangle = pygame.Rect(dimensions)
         self.label = label
         self.color = color
+        self.type = WidgetType.BAR
 
     def draw(self, surface):
         """Draw the bar on the screen."""
-        bar_surface = self._get_surface()
-        surface.blit(self.rectangle, bar_surface)
+        pygame.draw.rect(surface, self.color, self.rectangle)
         x = self.rectangle.left + self.rectangle.width // 2
-        y = self.rectangle.height - 20
+        y = 560
         self.label.draw(surface, (x, y))
 
     def flash(self, color):
@@ -76,13 +84,12 @@ class NumberBar:
         return pygame.Surface(size=(self.rectangle.width, self.rectangle.height))
 
 
-
 class NumberBarFactory:
     """Factory class to generate a collection of NumberBar instances."""
 
-    background_color = () # blue
-    font_color = (255, 255, 255) # white
-    scale_to_fit = 5
+    background_color = (66, 134, 244, 0.8)  # blue
+    font_color = (255, 255, 255)  # white
+    scale_to_fit = 4.7
 
     @classmethod
     def create_bars(cls, surface, values, font_color=None, background_color=None):
@@ -91,17 +98,21 @@ class NumberBarFactory:
         """
         left = 280
         # space on the screen that should be occupied by the bars
-        container_size = surface.get_width() - left * 2 
+        container_size = surface.get_width() - left * 2
         bar_width = container_size // len(values)
         font = pygame.font.SysFont(name="Arial", size=24)
         number_bars = []
         for value in values:
             number_label = Label(font, str(value), cls.font_color)
-            bar_height = cls.scale_to_fit * value 
+            bar_height = cls.scale_to_fit * value
             top = surface.get_height() - bar_height
             dimensions = (left, top, bar_width, bar_height)
-            number_bar = NumberBar(number_label, dimensions, background_color or cls.background_color)
+            number_bar = NumberBar(
+                number_label, dimensions, background_color or cls.background_color
+            )
             number_bars.append(number_bar)
-            left += bar_width + bar_width // 10 # add space between this bar and the next
+            left += (
+                bar_width + bar_width // 10
+            )  # add space between this bar and the next
         return number_bars
-    
+
