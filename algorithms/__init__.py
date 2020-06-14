@@ -7,8 +7,16 @@ from algorithms.bubble_sort import bubble_sort
 from algorithms.selection_sort import selection_sort
 from algorithms.insertion_sort import insertion_sort
 from algorithms.merge_sort import merge_sort
-from algorithms.quicksort import quicksort
-from algorithms.heapsort import heapsort
+# from algorithms.quicksort import quicksort
+# from algorithms.heapsort import heapsort
+
+
+def quicksort():
+    return 5 + 5
+
+
+def heapsort():
+    return 10 + 10
 
 
 ALGORITHMS = {
