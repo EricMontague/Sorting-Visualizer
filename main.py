@@ -7,9 +7,15 @@ from visualizer import SortingVisualizerController
 from visualizer.bars import NumberBar, NavigationBar
 from visualizer.buttons import Button, InputStepperButton
 from visualizer.labels import Label
-from visualizer.widgets import InputStepper
+from visualizer.input_stepper import InputStepper
 from algorithms import ALGORITHMS
 
+
+WHITE = (255, 255, 255)
+GRAY = (230, 230, 230)
+BLACK = (0, 0, 0)
+PURPLE = (98, 110, 227)
+NAVY_BLUE = (52, 73, 94)
 
 
 def create_controller(interface):
@@ -26,67 +32,66 @@ def create_number_bars(screen, num_bars=5):
     return number_bars
 
 
-def create_input_stepper(name, navbar_dimensions, button_color=(255, 255, 255)):
+def create_input_stepper(
+    name, navbar_dimensions, triangle_up, triangle_down, button_color=NAVY_BLUE
+):
     """Create and return an input stepper widget."""
-    #defaultbutton color is white
     font = pygame.font.SysFont(name="Arial", size=24)
     input_label = Label(font, "5", button_color)
-    triangle_up = ()
-    triangle_down = ()
     increment_button = InputStepperButton(triangle_up, button_color)
     decrement_button = InputStepperButton(triangle_down, button_color)
-    input_stepper = InputStepper(
-        input_label,
-        increment_button,
-        decrement_button,
-        name
-    )   
+    input_stepper = InputStepper(input_label, increment_button, decrement_button, name)
     return input_stepper
 
 
 def create_navigation_bar(screen):
     """Create the navigation bar."""
     font = pygame.font.SysFont(name="Arial", size=24)
-    font_color = (255, 255, 255) # white
-    navbar_color = (51, 153, 255) # blue
     navbar_dimensions = (0, 0, screen.get_width(), screen.get_height() // 8)
 
-    sorting_speed_widget = create_input_stepper("sorting_spped_adjuster", navbar_dimensions)
-    array_size_widget = create_input_stepper("array_size_adjuster", navbar_dimensions)
+    sorting_speed_widget = create_input_stepper(
+        "sorting_speed_adjuster",
+        navbar_dimensions,
+        [(1000, 220), (990, 230), (1010, 230)],
+        [(1000, 245), (990, 235), (1010, 235)],
+    )
+    array_size_widget = create_input_stepper(
+        "array_size_adjuster",
+        navbar_dimensions,
+        [(1000, 260), (990, 270), (1010, 270)],
+        [(1000, 285), (990, 275), (1010, 275)],
+    )
 
-    navbar_elements = [Label(font, algorithm, font_color) for algorithm in ALGORITHMS]
+    navbar_elements = [Label(font, algorithm, WHITE) for algorithm in ALGORITHMS]
     navbar_elements.append(sorting_speed_widget)
     navbar_elements.append(array_size_widget)
-    navbar_elements.append(Label(font, "Array Size", font_color))
-    navbar_elements.append(Label(font, "Sorting Speed", font_color))
+    # navbar_elements.append(Label(font, "Array Size", WHITE))
+    # navbar_elements.append(Label(font, "Sorting Speed", WHITE))
 
-    navigation_bar = NavigationBar(navbar_dimensions, navbar_elements, navbar_color)
+    navigation_bar = NavigationBar(navbar_dimensions, navbar_elements, NAVY_BLUE)
     return navigation_bar
 
-    
+
 def create_interface(screen):
     """Create all of the necessary shapes and objects
     to build the visualizer interface. Returns a
     SortingVisualizerGUI instance.
     """
+    # need to consider putting the center variable back in the label constructor
+    # can't draw a surface on another surface
     font = pygame.font.SysFont(name="Arial", size=24)
-    font_color = (0, 0, 0) # black
-    button_color = () # gray
-    reset_buttons_dimensions = ()
-    sort_button_dimensions = ()
+    reset_button_dimensions = (65, 100, 100, 50)
+    sort_button_dimensions = (65, 160, 100, 50)
     navigation_bar = create_navigation_bar(screen)
-    sort_label = Label(font, "Sort", font_color)
-    reset_label = Label(font, "Reset", font_color)
+    sort_label = Label(font, "Sort", WHITE)
+    reset_label = Label(font, "Reset", WHITE)
 
-    reset_button = Button(reset_label, reset_button_dimensions, button_color)
-    sort_button = Button(sort_label, sort_button_dimensions, button_color)
+    reset_button = Button(reset_label, reset_button_dimensions, PURPLE)
+    sort_button = Button(sort_label, sort_button_dimensions, PURPLE)
 
     number_bars = create_number_bars(screen)
     interface = SortingVisualizerGUI(
-        screen,
-        navigation_bar,
-        [reset_button, sort_button],
-        number_bars
+        screen, navigation_bar, [reset_button, sort_button], number_bars
     )
     return interface
 
@@ -96,9 +101,8 @@ def main():
     pygame.init()
     width = 1080
     height = 600
-    background_color = (255, 255, 255) # white
     screen = pygame.display.set_mode(size=(width, height))
-    screen.fill(background_color)
+    screen.fill(GRAY)
 
     interface = create_interface(screen)
     visualizer = create_controller(interface)
