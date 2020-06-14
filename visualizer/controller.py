@@ -1,7 +1,6 @@
 """This module contains the controller class for the sorting visualizer GUI."""
 
 
-import sys
 import pygame
 import random
 from visualizer.bars import NumberBarFactory
@@ -18,7 +17,7 @@ class SortingVisualizerController:
 
     def run(self):
         """Start the visualizer."""
-        while not self.interface.quit():
+        while True:
             element, mouse_position = self.interface.get_clicked_element()
             if element.name in self.algorithms:
                 self.update_selected_algorithm(element.name)
@@ -47,7 +46,7 @@ class SortingVisualizerController:
                     )
             elif element.name == "reset_button":
                 self.reset()
-        sys.exit()
+        
 
     def update_selected_algorithm(self, algorithm):
         """Update the selected algorithm attribute."""
@@ -62,7 +61,7 @@ class SortingVisualizerController:
         """Return a new list of bars of the given size and to replace
         the bars currently on the screen.
         """
-        values = [random.randrange(1, 100) for num in range(size)]
+        values = [random.randrange(20, 100) for num in range(size)]
         number_bars = NumberBarFactory.create_bars(surface, values)
         return number_bars
 
@@ -72,6 +71,8 @@ class SortingVisualizerController:
     
     def reset(self):
         """Reset the GUI back to its original state."""
-        pass
+        self.sorting_speed = 5
+        self.selected_algorithm = None
+        self.interface.reset()
 
 
