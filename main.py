@@ -24,7 +24,7 @@ def create_controller(interface):
     return visualizer
 
 
-def create_number_bars(screen, num_bars=5):
+def create_number_bars(screen, num_bars=30):
     """Create the bars that are going to represent numbers in an
     unsorted array.
     """
@@ -33,14 +33,22 @@ def create_number_bars(screen, num_bars=5):
 
 
 def create_input_stepper(
-    name, navbar_dimensions, triangle_up, triangle_down, button_color=NAVY_BLUE
+    name, navbar_dimensions, triangle_up, triangle_down, color=NAVY_BLUE
 ):
     """Create and return an input stepper widget."""
     font = pygame.font.SysFont(name="Arial", size=24)
-    input_label = Label(font, "5", button_color)
-    increment_button = InputStepperButton(triangle_up, button_color)
-    decrement_button = InputStepperButton(triangle_down, button_color)
-    input_stepper = InputStepper(input_label, increment_button, decrement_button, name)
+    value_label = Label(font, "5", color)
+    text_label = Label(font, name, color)
+
+    increment_button = InputStepperButton(triangle_up, color)
+    decrement_button = InputStepperButton(triangle_down, color)
+    input_stepper = InputStepper(
+        text_label,
+        value_label,
+        increment_button,
+        decrement_button,
+        name.lower().replace(" ", "_") + "_adjuster",
+    )
     return input_stepper
 
 
@@ -50,23 +58,21 @@ def create_navigation_bar(screen):
     navbar_dimensions = (0, 0, screen.get_width(), screen.get_height() // 8)
 
     sorting_speed_widget = create_input_stepper(
-        "sorting_speed_adjuster",
+        "Sorting Speed",
         navbar_dimensions,
-        [(1000, 220), (990, 230), (1010, 230)],
-        [(1000, 245), (990, 235), (1010, 235)],
+        [(1000, 110), (990, 120), (1010, 120)],
+        [(1000, 135), (990, 125), (1010, 125)],
     )
     array_size_widget = create_input_stepper(
-        "array_size_adjuster",
+        "Array Size",
         navbar_dimensions,
-        [(1000, 260), (990, 270), (1010, 270)],
-        [(1000, 285), (990, 275), (1010, 275)],
+        [(1000, 150), (990, 160), (1010, 160)],
+        [(1000, 175), (990, 165), (1010, 165)],
     )
 
     navbar_elements = [Label(font, algorithm, WHITE) for algorithm in ALGORITHMS]
     navbar_elements.append(sorting_speed_widget)
     navbar_elements.append(array_size_widget)
-    # navbar_elements.append(Label(font, "Array Size", WHITE))
-    # navbar_elements.append(Label(font, "Sorting Speed", WHITE))
 
     navigation_bar = NavigationBar(navbar_dimensions, navbar_elements, NAVY_BLUE)
     return navigation_bar
