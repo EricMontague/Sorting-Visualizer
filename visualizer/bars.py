@@ -21,6 +21,7 @@ class NavigationBar:
     """Class to represent a navigation bar for the GUI."""
 
     def __init__(self, dimensions, elements, color):
+        # left, top, width, height
         self.rectangle = pygame.Rect(dimensions)
         self.elements = elements
         self.color = color
@@ -38,17 +39,6 @@ class NavigationBar:
             else:
                 element.draw(surface)
 
-    def click(self, position):
-        """Alter the state of the element in the navbar that
-        was clicked.
-        """
-        pass
-
-    def _get_surface(self):
-        """Return the rectangular area of the navbar's area as
-        a pygame Surface object."""
-        return pygame.Surface(size=(self.rectangle.width, self.rectangle.height))
-
 
 class NumberBar:
     """Class to represent a bar in the GUI. The bar in turns
@@ -56,17 +46,19 @@ class NumberBar:
     """
 
     def __init__(self, label, dimensions, color):
+        # left, top, width, height
         self.rectangle = pygame.Rect(dimensions)
         self.label = label
         self.color = color
         self.type = WidgetType.BAR
 
-    def draw(self, surface):
+    def draw(self, surface, draw_label=True):
         """Draw the bar on the screen."""
         pygame.draw.rect(surface, self.color, self.rectangle)
         x = self.rectangle.left + self.rectangle.width // 2
         y = 560
-        self.label.draw(surface, (x, y))
+        if draw_label:
+            self.label.draw(surface, (x, y))
 
     def flash(self, color):
         """Change the bar's color to the provided color and then back
@@ -76,12 +68,12 @@ class NumberBar:
 
     def change_color(self, color):
         """Change the bar's color."""
-        pass
+        self.color = color
 
-    def _get_surface(self):
-        """Return the rectangular area of the navbar's area as
-        a pygame Surface object."""
-        return pygame.Surface(size=(self.rectangle.width, self.rectangle.height))
+    @property
+    def top(self):
+        """Return the top value of the bar."""
+        return self.rectangle[1]
 
 
 class NumberBarFactory:
