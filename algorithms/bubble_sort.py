@@ -17,12 +17,12 @@ def bubble_sort(interface, sorting_speed):
             #color change to indicate a comparison being made
             bars[j].change_color("green")
             bars[j + 1].change_color("green")
-            interface.render(bars[j], bars[j + 1])
+            interface.render(bars=[bars[j], bars[j + 1]])
             if bars[j] > bars[j + 1]:
                 #color change to indicate a swap is about to occur
                 bars[j].change_color("red")
                 bars[j + 1].change_color("red")
-                interface.render(bars[j], bars[j + 1])
+                interface.render(bars=[bars[j], bars[j + 1]])
                 interface.swap(bars[j], bars[j + 1])
                 swapped = True
             #change back to the original color
@@ -33,7 +33,7 @@ def bubble_sort(interface, sorting_speed):
                 bars[j + 1].change_color("blue")
             else:
                 bars[j + 1].change_color("purple")
-            interface.render(bars[j], bars[j + 1])
+            interface.render(bars=[bars[j], bars[j + 1]])
         if not swapped:
             break
     #change all bars to the final color to indicate the algorithm is finished
